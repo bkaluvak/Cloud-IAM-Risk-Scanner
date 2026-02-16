@@ -1,0 +1,132 @@
+{
+  "scan_metadata": {
+    "scan_time": "2026-02-15T02:10:50.524669",
+    "total_findings": 9,
+    "findings_by_severity": {
+      "CRITICAL": 4,
+      "HIGH": 3,
+      "MEDIUM": 2,
+      "LOW": 0,
+      "INFO": 0
+    }
+  },
+  "findings": [
+    {
+      "provider": "AWS",
+      "principal_type": "Role",
+      "principal_name": "LegacyApplicationRole",
+      "principal_id": "AROAI234567890EXAMPLE1",
+      "risk_type": "Full Wildcard Permissions",
+      "risk_level": "CRITICAL",
+      "description": "Policy allows all actions on all resources (*:* on *)",
+      "policy_name": "AllowEverything",
+      "policy_document": "{\"Version\": \"2012-10-17\", \"Statement\": [{\"Effect\": \"Allow\", \"Action\": \"*\", \"Resource\": \"*\"}]}",
+      "remediation": "Apply least privilege principle - grant specific permissions",
+      "timestamp": "2026-02-15T02:10:50.524455"
+    },
+    {
+      "provider": "AWS",
+      "principal_type": "User",
+      "principal_name": "john.doe",
+      "principal_id": "AIDAI234567890EXAMPLE2",
+      "risk_type": "Administrator Access",
+      "risk_level": "CRITICAL",
+      "description": "User has AdministratorAccess policy attached",
+      "policy_name": "arn:aws:iam::aws:policy/AdministratorAccess",
+      "policy_document": "AWS Managed Policy: AdministratorAccess",
+      "remediation": "Use least privilege - grant only required permissions",
+      "timestamp": "2026-02-15T02:10:50.524522"
+    },
+    {
+      "provider": "AWS",
+      "principal_type": "Role",
+      "principal_name": "PublicAssumeRole",
+      "principal_id": "AROAI234567890EXAMPLE3",
+      "risk_type": "Wildcard Trust Policy",
+      "risk_level": "CRITICAL",
+      "description": "Role can be assumed by any AWS principal",
+      "policy_name": "AssumeRolePolicyDocument",
+      "policy_document": "{\"Version\": \"2012-10-17\", \"Statement\": [{\"Effect\": \"Allow\", \"Principal\": {\"AWS\": \"*\"}, \"Action\": \"sts:AssumeRole\"}]}",
+      "remediation": "Restrict trust policy to specific principals",
+      "timestamp": "2026-02-15T02:10:50.524560"
+    },
+    {
+      "provider": "AWS",
+      "principal_type": "User",
+      "principal_name": "developer",
+      "principal_id": "AIDAI234567890EXAMPLE4",
+      "risk_type": "Privilege Escalation Risk",
+      "risk_level": "CRITICAL",
+      "description": "Policy grants privilege escalation actions: iam:AttachUserPolicy, iam:CreateAccessKey",
+      "policy_name": "DeveloperPolicy",
+      "policy_document": "{\"Version\": \"2012-10-17\", \"Statement\": [{\"Effect\": \"Allow\", \"Action\": [\"iam:AttachUserPolicy\", \"iam:CreateAccessKey\", \"iam:PutUserPolicy\"], \"Resource\": \"*\"}]}",
+      "remediation": "Review and restrict privilege escalation permissions",
+      "timestamp": "2026-02-15T02:10:50.524584"
+    },
+    {
+      "provider": "AWS",
+      "principal_type": "User",
+      "principal_name": "jane.smith",
+      "principal_id": "AIDAI234567890EXAMPLE5",
+      "risk_type": "No MFA Enabled",
+      "risk_level": "HIGH",
+      "description": "User has console access but no MFA device configured",
+      "policy_name": "N/A",
+      "policy_document": "Console access enabled",
+      "remediation": "Enable MFA for all users with console access",
+      "timestamp": "2026-02-15T02:10:50.524596"
+    },
+    {
+      "provider": "AWS",
+      "principal_type": "Role",
+      "principal_name": "DataProcessingRole",
+      "principal_id": "AROAI234567890EXAMPLE6",
+      "risk_type": "Wildcard Actions",
+      "risk_level": "HIGH",
+      "description": "Policy allows wildcard actions: s3:*",
+      "policy_name": "S3FullAccess",
+      "policy_document": "{\"Version\": \"2012-10-17\", \"Statement\": [{\"Effect\": \"Allow\", \"Action\": \"s3:*\", \"Resource\": \"arn:aws:s3:::specific-bucket/*\"}]}",
+      "remediation": "Specify explicit actions instead of wildcards",
+      "timestamp": "2026-02-15T02:10:50.524613"
+    },
+    {
+      "provider": "AWS",
+      "principal_type": "User",
+      "principal_name": "analyst",
+      "principal_id": "AIDAI234567890EXAMPLE7",
+      "risk_type": "Data Exfiltration Risk",
+      "risk_level": "HIGH",
+      "description": "Policy allows broad data access: s3:GetObject, secretsmanager:GetSecretValue on *",
+      "policy_name": "AnalystAccess",
+      "policy_document": "{\"Version\": \"2012-10-17\", \"Statement\": [{\"Effect\": \"Allow\", \"Action\": [\"s3:GetObject\", \"secretsmanager:GetSecretValue\", \"ssm:GetParameter\"], \"Resource\": \"*\"}]}",
+      "remediation": "Restrict data access to specific resources",
+      "timestamp": "2026-02-15T02:10:50.524635"
+    },
+    {
+      "provider": "AWS",
+      "principal_type": "Role",
+      "principal_name": "PartnerAccessRole",
+      "principal_id": "AROAI234567890EXAMPLE8",
+      "risk_type": "Cross-Account Access",
+      "risk_level": "MEDIUM",
+      "description": "Role can be assumed by account: 123456789012",
+      "policy_name": "AssumeRolePolicyDocument",
+      "policy_document": "{\"Version\": \"2012-10-17\", \"Statement\": [{\"Effect\": \"Allow\", \"Principal\": {\"AWS\": \"arn:aws:iam::123456789012:root\"}, \"Action\": \"sts:AssumeRole\"}]}",
+      "remediation": "Review and validate cross-account access requirements",
+      "timestamp": "2026-02-15T02:10:50.524650"
+    },
+    {
+      "provider": "AWS",
+      "principal_type": "User",
+      "principal_name": "service-account",
+      "principal_id": "AIDAI234567890EXAMPLE9",
+      "risk_type": "Multiple Access Keys",
+      "risk_level": "MEDIUM",
+      "description": "User has 2 access keys",
+      "policy_name": "N/A",
+      "policy_document": "[{\"AccessKeyId\": \"AKIAI234567890EXAMPLE1\", \"Status\": \"Active\"}, {\"AccessKeyId\": \"AKIAI234567890EXAMPLE2\", \"Status\": \"Active\"}]",
+      "remediation": "Rotate and remove unused access keys",
+      "timestamp": "2026-02-15T02:10:50.524664"
+    }
+  ]
+}
